@@ -41,7 +41,7 @@ const FormWithdraw = ({ isActive }) => {
                                 htmlFor="withdrawAddress"
                                 className="block text-gray-700 font-bold"
                             >
-                                Receiver:
+                                Destination:
                             </label>
                             <input
                                 id="withdrawAddress"
