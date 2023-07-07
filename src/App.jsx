@@ -1,7 +1,8 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import Nav from "./Components/Nav";
 import Form from './Components/Form';
+import FormWithdraw from './Components/FormWithdraw'
 import EtherWallet from "../contracts/EtherWallet.json";
 
 
@@ -16,10 +17,10 @@ function App() {
   const [ethToDeposit, setEthToDeposit] = useState(0);
 
   const etherWalletAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
-  
-  useEffect(()=>{
-    const getEtherWalletBalance  = async () =>{
-      try{
+
+  useEffect(() => {
+    const getEtherWalletBalance = async () => {
+      try {
         const provider = new ethers.BrowserProvider(window.ethereum, "any");
         const contract = new ethers.Contract(
           etherWalletAddress,
@@ -30,20 +31,20 @@ function App() {
         balance = ethers.formatEther(balance);
         setScBalance(balance);
         console.log("SC Balance: ", balance);
-      }catch(err){
+      } catch (err) {
         console.log("Error while connnecting to contract: ", err);
       }
     }
     getEtherWalletBalance();
-  },[]);
-  
+  }, []);
+
   //conecto to metamask wallet
   const connectToMetamask = async () => {
     console.log("connecting to metamask...");
     setShouldDisable(true);
     try {
       const provider = new ethers.BrowserProvider(window.ethereum, "any");
-    
+
       const signer = await provider.getSigner();
 
       await provider.send('eth_requestAccounts', []);
@@ -76,10 +77,15 @@ function App() {
         connectToMetamask={connectToMetamask}
         disconnetToMetamask={disconnetToMetamask}
       />
+      <div>
+        <Form
+          isActive={isActive}
+        />
+        <FormWithdraw
+          isActive={isActive}
+        />
+      </div>
 
-      < Form 
-        isActive = {isActive}
-      />
     </div>
   )
 }

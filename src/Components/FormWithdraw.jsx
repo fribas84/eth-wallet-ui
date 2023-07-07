@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 
-const Form = ({ isActive }) => {
+const FormWithdraw = ({ isActive }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,7 +14,7 @@ const Form = ({ isActive }) => {
             {isActive &&
                 <div className="md:w-1/2 lg:w-2/5">
                     <h2 className="font-black text-3xl text-center mb-1">
-                        Deposit Eth
+                        Withdraw Eth
                     </h2>
 
                     <form
@@ -23,24 +23,40 @@ const Form = ({ isActive }) => {
                     >
                         <div className="mb-2">
                             <label
-                                htmlFor="depositAmount"
+                                htmlFor="withdrawAmount"
                                 className="block text-gray-700 font-bold"
                             >
                                 Amount:
                             </label>
                             <input
-                                id="depositAmount"
+                                id="withdrawAmount"
                                 className="border-2 w-full p-2 mt-1 placeholder-gray-400 rounded-md"
                                 type="number"
-                                placeholder="amount to deposit"
+                                placeholder="amount to withdraw"
+
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <label
+                                htmlFor="withdrawAddress"
+                                className="block text-gray-700 font-bold"
+                            >
+                                Receiver:
+                            </label>
+                            <input
+                                id="withdrawAddress"
+                                className="border-2 w-full p-2 mt-1 placeholder-gray-400 rounded-md"
+                                type="text"
+                                placeholder="address destination"
 
                             />
                         </div>
 
+
                         <input
                             type="submit"
-                            className="bg-teal-500 w-full p-3 text-white font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"
-                            value="Deposit"
+                            className="bg-teal-500 w-full p-3 text-white  font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"
+                            value="Withdraw"
                         />
                     </form>
                 </div>
@@ -50,4 +66,4 @@ const Form = ({ isActive }) => {
     );
 };
 
-export default Form;
+export default FormWithdraw;
