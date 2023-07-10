@@ -12,8 +12,8 @@ const FormWithdraw = ({ isActive }) => {
     return (
         <>
             {isActive &&
-                <div className="md:w-1/2 lg:w-2/5">
-                    <h2 className="font-black text-3xl text-center mb-1">
+                <div>
+                    <h2 className="font-black text-3xl text-center m-4">
                         Withdraw Eth
                     </h2>
 

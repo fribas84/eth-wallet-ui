@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ethers } from 'ethers';
 import Nav from "./Components/Nav";
 import Form from './Components/Form';
 import FormWithdraw from './Components/FormWithdraw'
-import EtherWallet from "../contracts/EtherWallet.json";
-
+import ABI from "../contracts/EtherWallet.json";
+import { HARDHAT_ADDRESS } from './Constants/constants';
+import AccountData from './Components/AccountData';
 
 
 function App() {
@@ -12,28 +13,30 @@ function App() {
   const [balance, setBalance] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [showDisable, setShouldDisable] = useState(false); //should disable connect button while connection 
-
-  const [scBalance, setScBalance] = useState(0);
   const [ethToDeposit, setEthToDeposit] = useState(0);
 
-  const etherWalletAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+  const [scBalance, setScBalance] = useState(0);
+  
 
   useEffect(() => {
     const getEtherWalletBalance = async () => {
       try {
         const provider = new ethers.BrowserProvider(window.ethereum, "any");
+        const signer = await provider.getSigner();
         const contract = new ethers.Contract(
-          etherWalletAddress,
-          EtherWallet.abi,
-          provider
+          HARDHAT_ADDRESS,
+          ABI.abi,
+          signer
         )
         let balance = await contract.balanceOf();
         balance = ethers.formatEther(balance);
         setScBalance(balance);
-        console.log("SC Balance: ", balance);
+        console.log("SC Balance sin hook: ", balance);
+        console.log("contract sin hook", contract);
       } catch (err) {
         console.log("Error while connnecting to contract: ", err);
       }
+
     }
     getEtherWalletBalance();
   }, []);
@@ -44,9 +47,7 @@ function App() {
     setShouldDisable(true);
     try {
       const provider = new ethers.BrowserProvider(window.ethereum, "any");
-
       const signer = await provider.getSigner();
-
       await provider.send('eth_requestAccounts', []);
       const account = await signer.getAddress();
       let balance = await provider.getBalance(account);
@@ -67,6 +68,26 @@ function App() {
     setBalance('');
     setIsActive(false);
   }
+
+  const handleDeposit = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum, "any");
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        HARDHAT_ADDRESS,
+        ABI.abi,
+        signer
+      )
+      const transaction = await contract.deposit({
+        value: ethers.parseEther(ethToDeposit)}
+        );
+      console.log(transaction);
+    }catch(err){
+      console.log("Error ocurred while doing transfer")
+    }
+  }
+
+
   return (
     <div className='container mx-auto'>
       <Nav
@@ -77,14 +98,30 @@ function App() {
         connectToMetamask={connectToMetamask}
         disconnetToMetamask={disconnetToMetamask}
       />
-      <div>
-        <Form
-          isActive={isActive}
-        />
-        <FormWithdraw
-          isActive={isActive}
-        />
-      </div>
+      {isActive &&
+        <div className='mt-12 flex'>
+          <div className='md:w-1/2 lg:w-2/5'>
+          <Form
+            isActive={isActive}
+            setEthToDeposit = {setEthToDeposit}
+            ethToDeposit = {ethToDeposit}
+            handleDeposit = {handleDeposit}
+            balance = {balance}
+          />
+          <FormWithdraw
+            isActive={isActive}
+          />
+          </div>
+
+          <AccountData 
+          balance= {balance}
+          scBalance = {scBalance}
+          />
+        </div>}
+      {!isActive &&
+        <h1>Please connect with MetaMask</h1>
+
+      }
 
     </div>
   )

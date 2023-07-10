@@ -2,17 +2,29 @@
 import { useState, useEffect } from "react";
 
 
-const Form = ({ isActive }) => {
+const Form = ({
+    isActive,
+    setEthToDeposit,
+    ethToDeposit,
+    handleDeposit,
+    balance }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if (balance >= ethToDeposit){
+            handleDeposit();
+        }
+        else {
+            console.log("balance: ",balance);
+            console.log("eth to deposit: ", ethToDeposit);
+            console.log("error");
+        }
     }
 
     return (
         <>
             {isActive &&
-                <div className="md:w-1/2 lg:w-2/5">
+                <div >
                     <h2 className="font-black text-3xl text-center mb-1">
                         Deposit Eth
                     </h2>
@@ -33,7 +45,7 @@ const Form = ({ isActive }) => {
                                 className="border-2 w-full p-2 mt-1 placeholder-gray-400 rounded-md"
                                 type="number"
                                 placeholder="amount to deposit"
-
+                                onChange={(e) => setEthToDeposit(e.target.value)}
                             />
                         </div>
 
@@ -43,6 +55,7 @@ const Form = ({ isActive }) => {
                             value="Deposit"
                         />
                     </form>
+            
                 </div>
 
             }
