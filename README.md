@@ -9,9 +9,9 @@ Test project to validate couple of web3 concepts
 - Metamask
 
 ## Enhancements to do 
--[ ] Hooks for use Contract
--[ ] clarify app.jsx
-
+- [x] Hooks for use Contract
+- [x] clarify app.jsx
+- [ ] Automatic refresh
 ## To run
 Currently is using a HardHat deployed contract
 ```
