@@ -17,7 +17,6 @@ export const useContract = ()=>{
                   ABI.abi,
                   signer
                 )
-                console.log("contract from function: ", contract);
                 setContract(contract);
               }catch(err){
                 console.log("Error fetching contract: ", err);

@@ -1,16 +1,14 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect} from 'react';
 import { ethers } from 'ethers';
 import Nav from "./Components/Nav";
 import Form from './Components/Form';
 import FormWithdraw from './Components/FormWithdraw'
-import ABI from "../contracts/EtherWallet.json";
-import { HARDHAT_ADDRESS } from './Constants/constants';
 import AccountData from './Components/AccountData';
 import { useContract } from './Hooks/useContract';
 
 
 function App() {
-  const contractHook = useContract();
+  const USEContract = useContract();
   const [account, setAccount] = useState('');
   const [balance, setBalance] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -22,17 +20,12 @@ function App() {
 
   useEffect(() => {
     const getEtherWalletBalance = async () => {
-      try {
-        let balance = await contractHook.balanceOf();
+        let balance = await USEContract.balanceOf();
         balance = ethers.formatEther(balance);
         setScBalance(balance);
-      } catch (err) {
-        console.log("Error while connnecting to contract: ", err);
-      }
-
     }
     getEtherWalletBalance();
-  }, []);
+  },[USEContract]);
 
   //conecto to metamask wallet
   const connectToMetamask = async () => {
@@ -68,10 +61,10 @@ function App() {
   const handleDeposit = async () => {
     try {
       
-      const transaction = await contractHook.deposit({
+      const transaction = await USEContract.deposit({
         value: ethers.parseEther(ethToDeposit)}
         );
-      console.log(transaction);
+      console.log("Trasaction", transaction);
     }catch(err){
       console.log("Error ocurred while doing transfer: ",err);
     }
