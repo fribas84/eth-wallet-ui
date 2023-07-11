@@ -23,18 +23,9 @@ function App() {
   useEffect(() => {
     const getEtherWalletBalance = async () => {
       try {
-        const provider = new ethers.BrowserProvider(window.ethereum, "any");
-        const signer = await provider.getSigner();
-        const contract = new ethers.Contract(
-          HARDHAT_ADDRESS,
-          ABI.abi,
-          signer
-        )
-        let balance = await contract.balanceOf();
+        let balance = await contractHook.balanceOf();
         balance = ethers.formatEther(balance);
         setScBalance(balance);
-        console.log("SC Balance sin hook: ", balance);
-        console.log("contract sin hook", contract);
       } catch (err) {
         console.log("Error while connnecting to contract: ", err);
       }
@@ -71,42 +62,10 @@ function App() {
     setIsActive(false);
   }
 
+
+
+
   const handleDeposit = async () => {
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum, "any");
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(
-        HARDHAT_ADDRESS,
-        ABI.abi,
-        signer
-      )
-      const transaction = await contract.deposit({
-        value: ethers.parseEther(ethToDeposit)}
-        );
-      console.log(transaction);
-    }catch(err){
-      console.log("Error ocurred while doing transfer")
-    }
-  }
-
-
-  const getContract = async () =>{
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum, "any");
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(
-        HARDHAT_ADDRESS,
-        ABI.abi,
-        signer
-      )
-      console.log("contract from function: ", contract);
-      return contract;
-    }catch(err){
-      console.log("Error fetching contract: ", err);
-      return null;
-    }
-  }
-  const handleDeposit2 = async () => {
     try {
       
       const transaction = await contractHook.deposit({
@@ -135,7 +94,7 @@ function App() {
             isActive={isActive}
             setEthToDeposit = {setEthToDeposit}
             ethToDeposit = {ethToDeposit}
-            handleDeposit = {handleDeposit2}
+            handleDeposit = {handleDeposit}
             balance = {balance}
           />
           <FormWithdraw

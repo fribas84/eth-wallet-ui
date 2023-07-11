@@ -1,5 +1,5 @@
 # Eth Wallet UI
-Test project to validate couple of web3 concepts
+Test project to validate couple of web3 concepts and is a PoC, not for production. Just practice. 
 
 ## Stack used:
 - Vite
@@ -12,6 +12,8 @@ Test project to validate couple of web3 concepts
 - [x] Hooks for use Contract
 - [x] clarify app.jsx
 - [ ] Automatic refresh
+- [ ] Error Handling
+- [ ] corner cases
 ## To run
 Currently is using a HardHat deployed contract
 ```

@@ -26,5 +26,4 @@ export const useContract = ()=>{
         })();
     },[])
     return contract;
-    
-    }
+}
