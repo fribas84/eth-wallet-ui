@@ -6,9 +6,11 @@ import FormWithdraw from './Components/FormWithdraw'
 import ABI from "../contracts/EtherWallet.json";
 import { HARDHAT_ADDRESS } from './Constants/constants';
 import AccountData from './Components/AccountData';
+import { useContract } from './Hooks/useContract';
 
 
 function App() {
+  const contractHook = useContract();
   const [account, setAccount] = useState('');
   const [balance, setBalance] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -88,6 +90,34 @@ function App() {
   }
 
 
+  const getContract = async () =>{
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum, "any");
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        HARDHAT_ADDRESS,
+        ABI.abi,
+        signer
+      )
+      console.log("contract from function: ", contract);
+      return contract;
+    }catch(err){
+      console.log("Error fetching contract: ", err);
+      return null;
+    }
+  }
+  const handleDeposit2 = async () => {
+    try {
+      
+      const transaction = await contractHook.deposit({
+        value: ethers.parseEther(ethToDeposit)}
+        );
+      console.log(transaction);
+    }catch(err){
+      console.log("Error ocurred while doing transfer: ",err);
+    }
+  }
+
   return (
     <div className='container mx-auto'>
       <Nav
@@ -105,7 +135,7 @@ function App() {
             isActive={isActive}
             setEthToDeposit = {setEthToDeposit}
             ethToDeposit = {ethToDeposit}
-            handleDeposit = {handleDeposit}
+            handleDeposit = {handleDeposit2}
             balance = {balance}
           />
           <FormWithdraw
