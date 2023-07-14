@@ -1,13 +1,14 @@
 
+import { formatEther } from "ethers";
 import { useState, useEffect } from "react";
 
 
 const Form = ({
-    isActive,
     setEthToDeposit,
     ethToDeposit,
     handleDeposit,
-    balance }) => {
+    balance,
+    walletClient }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,7 +24,7 @@ const Form = ({
 
     return (
         <>
-            {isActive &&
+            {walletClient &&
                 <div >
                     <h2 className="font-black text-3xl text-center mb-1">
                         Deposit Eth
@@ -44,6 +45,7 @@ const Form = ({
                                 id="depositAmount"
                                 className="border-2 w-full p-2 mt-1 placeholder-gray-400 rounded-md"
                                 type="number"
+                                step="any"
                                 placeholder="amount to deposit"
                                 onChange={(e) => setEthToDeposit(e.target.value)}
                             />

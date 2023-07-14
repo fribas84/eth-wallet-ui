@@ -1,106 +1,98 @@
-import { useState, useEffect} from 'react';
-import { ethers } from 'ethers';
+import { useState, useEffect } from 'react';
+import { ethers, parseEther } from 'ethers';
 import Nav from "./Components/Nav";
 import Form from './Components/Form';
 import FormWithdraw from './Components/FormWithdraw'
 import AccountData from './Components/AccountData';
-import { useContract } from './Hooks/useContract';
+import {
+  fetchBalance,
+  readContract,
+  writeContract,
+  prepareWriteContract
+} from '@wagmi/core'
+import { CONTRACT_ADDRESS } from './Constants/constants'
+import { getContract } from 'wagmi/actions'
+import ABI from '../contracts/EtherWallet.json'
+import { useWalletClient, useBalance, useAccount } from 'wagmi'
+import { formatEther } from 'viem';
 
 
 function App() {
-  const USEContract = useContract();
-  const [account, setAccount] = useState('');
-  const [balance, setBalance] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [showDisable, setShouldDisable] = useState(false); //should disable connect button while connection 
+
   const [ethToDeposit, setEthToDeposit] = useState(0);
-
   const [scBalance, setScBalance] = useState(0);
-  
 
+  //Initial data
+  const { data: walletClient } = useWalletClient({});
+const {address} = useAccount();
+
+  const contract = getContract({
+    address: CONTRACT_ADDRESS,
+    abi: ABI.abi,
+    walletClient
+  })
+
+  const { data:balance} = useBalance({
+    address: address
+  })
+
+
+
+  //Read contract balance & update state
   useEffect(() => {
-    const getEtherWalletBalance = async () => {
-        let balance = await USEContract.balanceOf();
-        balance = ethers.formatEther(balance);
-        setScBalance(balance);
+    if (contract) {
+      const readBalance = async () => {
+        const result = await contract.read.balanceOf();
+        console.log(result);
+        setScBalance(formatEther(result));
+      }
+      readBalance();
     }
-    getEtherWalletBalance();
-  },[USEContract]);
-
-  //conecto to metamask wallet
-  const connectToMetamask = async () => {
-    console.log("connecting to metamask...");
-    setShouldDisable(true);
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum, "any");
-      const signer = await provider.getSigner();
-      await provider.send('eth_requestAccounts', []);
-      const account = await signer.getAddress();
-      let balance = await provider.getBalance(account);
-      balance = ethers.formatEther(balance);
-
-      setAccount(account);
-      setBalance(balance);
-      setIsActive(true);
-      setShouldDisable(false);
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-  const disconnetToMetamask = async () => {
-    console.log("disconnecting to metamask...");
-    setAccount('');
-    setBalance('');
-    setIsActive(false);
-  }
+  }, [contract])
+  console.log("scbalance: out useeffect: ", scBalance);
 
 
 
 
+  //DEPOSIT
   const handleDeposit = async () => {
-    try {
-      
-      const transaction = await USEContract.deposit({
-        value: ethers.parseEther(ethToDeposit)}
-        );
-      console.log("Trasaction", transaction);
-    }catch(err){
-      console.log("Error ocurred while doing transfer: ",err);
-    }
+    const config = await prepareWriteContract({
+      address: CONTRACT_ADDRESS,
+      abi: ABI.abi,
+      functionName: 'deposit',
+      value: parseEther(ethToDeposit)
+    })
+    const { hash } = await writeContract(config);
+    console.log("transaction hash: ", hash);
   }
 
   return (
     <div className='container mx-auto'>
       <Nav
-        account={account}
-        balance={balance}
-        isActive={isActive}
-        showDisable={showDisable}
-        connectToMetamask={connectToMetamask}
-        disconnetToMetamask={disconnetToMetamask}
+        walletClient={walletClient}
+
       />
-      {isActive &&
+      {walletClient &&
         <div className='mt-12 flex'>
           <div className='md:w-1/2 lg:w-2/5'>
-          <Form
-            isActive={isActive}
-            setEthToDeposit = {setEthToDeposit}
-            ethToDeposit = {ethToDeposit}
-            handleDeposit = {handleDeposit}
-            balance = {balance}
-          />
-          <FormWithdraw
-            isActive={isActive}
-          />
+            <Form
+              setEthToDeposit={setEthToDeposit}
+              ethToDeposit={ethToDeposit}
+              handleDeposit={handleDeposit}
+              balance={balance.formatted}
+              walletClient={walletClient}
+            />
+            <FormWithdraw
+
+            />
           </div>
 
-          <AccountData 
-          balance= {balance}
-          scBalance = {scBalance}
+          <AccountData
+            balance={balance.formatted}
+            scBalance={scBalance}
           />
         </div>}
-      {!isActive &&
+      {!walletClient &&
         <h1>Please connect with MetaMask</h1>
 
       }
