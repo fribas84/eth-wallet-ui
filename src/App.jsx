@@ -50,9 +50,6 @@ function App() {
   }, [contract])
 
 
-
-
-
   //DEPOSIT
   const handleDeposit = async () => {
     const config = await prepareWriteContract({

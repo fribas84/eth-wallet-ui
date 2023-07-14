@@ -12,7 +12,7 @@ Test project to validate couple of web3 concepts and is a PoC, not for productio
 - [x] use RainbowKit for login
 - [x] use wagmi to interact with contract
 - [x] clarify app.jsx
-- [ ] corner cases
+- [ ] Add a loader for longer transactions 
 
 ## Basics to do
 - [ ] widthdraw
