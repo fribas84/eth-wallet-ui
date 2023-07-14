@@ -9,11 +9,15 @@ Test project to validate couple of web3 concepts and is a PoC, not for productio
 - Metamask
 
 ## Enhancements to do 
-- [x] Hooks for use Contract
+- [x] use RainbowKit for login
+- [x] use wagmi to interact with contract
 - [x] clarify app.jsx
+- [ ] corner cases
+
+## Basics to do
+- [ ] widthdraw
 - [ ] Automatic refresh
 - [ ] Error Handling
-- [ ] corner cases
 ## To run
 Currently is using a HardHat deployed contract
 ```
