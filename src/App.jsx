@@ -24,7 +24,7 @@ function App() {
 
   //Initial data
   const { data: walletClient } = useWalletClient({});
-const {address} = useAccount();
+  const { address } = useAccount();
 
   const contract = getContract({
     address: CONTRACT_ADDRESS,
@@ -32,7 +32,7 @@ const {address} = useAccount();
     walletClient
   })
 
-  const { data:balance} = useBalance({
+  const { data: balance } = useBalance({
     address: address
   })
 
@@ -43,13 +43,12 @@ const {address} = useAccount();
     if (contract) {
       const readBalance = async () => {
         const result = await contract.read.balanceOf();
-        console.log(result);
         setScBalance(formatEther(result));
       }
       readBalance();
     }
   }, [contract])
-  console.log("scbalance: out useeffect: ", scBalance);
+
 
 
 
@@ -63,7 +62,6 @@ const {address} = useAccount();
       value: parseEther(ethToDeposit)
     })
     const { hash } = await writeContract(config);
-    console.log("transaction hash: ", hash);
   }
 
   return (

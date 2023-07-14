@@ -15,11 +15,7 @@ const Form = ({
         if (balance >= ethToDeposit){
             handleDeposit();
         }
-        else {
-            console.log("balance: ",balance);
-            console.log("eth to deposit: ", ethToDeposit);
-            console.log("error");
-        }
+        
     }
 
     return (
