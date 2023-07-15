@@ -2,7 +2,9 @@
 import { useState, useEffect } from "react";
 
 
-const FormWithdraw = ({ isActive }) => {
+
+
+const FormWithdraw = ({ addressToWithdraw, setAddressToWithdraw, ethToWithdraw, handleWithdraw,walletClient }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -11,7 +13,7 @@ const FormWithdraw = ({ isActive }) => {
 
     return (
         <>
-            {isActive &&
+            {walletClient &&
                 <div>
                     <h2 className="font-black text-3xl text-center m-4">
                         Withdraw Eth
@@ -48,11 +50,13 @@ const FormWithdraw = ({ isActive }) => {
                                 className="border-2 w-full p-2 mt-1 placeholder-gray-400 rounded-md"
                                 type="text"
                                 placeholder="address destination"
+                                defaultValue={addressToWithdraw}
 
                             />
                         </div>
 
-
+                        <button
+                        className="bg-teal-500 w-full p-3 text-white  font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md mb-2">Max</button>
                         <input
                             type="submit"
                             className="bg-teal-500 w-full p-3 text-white  font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"

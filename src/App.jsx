@@ -18,14 +18,15 @@ import {
 
 
 function App() {
-
-  const [ethToDeposit, setEthToDeposit] = useState("0");
-  //const [scBalance, setScBalance] = useState(0);
-
-
   //Initial data
   const { data: walletClient } = useWalletClient({});
   const { address } = useAccount();
+  const [ethToDeposit, setEthToDeposit] = useState("0");
+  const [ethToWithdraw, setEthToWithdraw] = useState("0");
+  const [addressToWithdraw,setAddressToWithdraw] = useState(address);
+
+
+
 
 
   //read Balances
@@ -52,10 +53,24 @@ function App() {
   })
   const { write: deposit } = useContractWrite(configDeposit);
 
-
-
   const handleDeposit = async () => {
     deposit?.();
+  }
+
+   //withdraw
+   const { config: configWithdraw} = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: ABI.abi,
+    functionName: 'withdraw',
+    value: parseEther(ethToWithdraw),
+    onSuccess(data) {
+      console.log('Success', data)
+    }
+  })
+  const { write: withdraw } = useContractWrite(configWithdraw);
+
+  const handleWithdraw = async () => {
+    withdraw?.();
   }
 
   return (
@@ -75,6 +90,11 @@ function App() {
               walletClient={walletClient}
             />
             <FormWithdraw
+              addressToWithdraw = {addressToWithdraw}
+              setAddressToWithdraw = {setAddressToWithdraw}
+              ethToWithdraw = {ethToWithdraw}
+              handleWithdraw = {handleWithdraw}
+              walletClient={walletClient}
 
             />
           </div>
