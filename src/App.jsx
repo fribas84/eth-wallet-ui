@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import { formatEther, parseEther } from 'ethers';
+import { useState } from 'react';
+import { parseEther } from 'ethers';
 import Nav from "./Components/Nav";
 import Form from './Components/Form';
 import FormWithdraw from './Components/FormWithdraw'
 import AccountData from './Components/AccountData';
 import { CONTRACT_ADDRESS } from './Constants/constants'
-import { getContract } from 'wagmi/actions'
 import ABI from '../contracts/EtherWallet.json'
 import {
   useWalletClient,
