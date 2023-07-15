@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 
 
-const FormWithdraw = ({ addressToWithdraw, setAddressToWithdraw, ethToWithdraw, handleWithdraw,walletClient }) => {
+const FormWithdraw = ({ addressToWithdraw, setAddressToWithdraw, ethToWithdraw, handleWithdraw }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,7 +13,7 @@ const FormWithdraw = ({ addressToWithdraw, setAddressToWithdraw, ethToWithdraw, 
 
     return (
         <>
-            {walletClient &&
+           
                 <div>
                     <h2 className="font-black text-3xl text-center m-4">
                         Withdraw Eth
@@ -65,7 +65,7 @@ const FormWithdraw = ({ addressToWithdraw, setAddressToWithdraw, ethToWithdraw, 
                     </form>
                 </div>
 
-            }
+            
         </>
     );
 };

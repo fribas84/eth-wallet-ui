@@ -25,7 +25,7 @@ const Form = ({
 
     return (
         <>
-            {walletClient &&
+           
                 <div >
                     <h2 className="font-black text-3xl text-center mb-1">
                         Deposit Eth
@@ -62,7 +62,7 @@ const Form = ({
             
                 </div>
 
-            }
+            
         </>
     );
 };

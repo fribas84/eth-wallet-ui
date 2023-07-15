@@ -87,14 +87,14 @@ function App() {
               ethToDeposit={ethToDeposit}
               handleDeposit={handleDeposit}
               balance={balance.formatted}
-              walletClient={walletClient}
+              
             />
             <FormWithdraw
               addressToWithdraw = {addressToWithdraw}
               setAddressToWithdraw = {setAddressToWithdraw}
               ethToWithdraw = {ethToWithdraw}
               handleWithdraw = {handleWithdraw}
-              walletClient={walletClient}
+          
 
             />
           </div>
