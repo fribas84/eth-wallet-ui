@@ -1,5 +1,5 @@
 
-import { formatEther } from "ethers";
+import { formatEther, parseEther } from "ethers";
 import { useState, useEffect } from "react";
 
 
@@ -14,6 +14,11 @@ const Form = ({
         e.preventDefault();
         if (balance >= ethToDeposit){
             handleDeposit();
+        }
+        else{
+            console.log("error");
+            console.log(balance);
+            console.log(ethToDeposit);
         }
         
     }
@@ -44,6 +49,7 @@ const Form = ({
                                 step="any"
                                 placeholder="amount to deposit"
                                 onChange={(e) => setEthToDeposit(e.target.value)}
+                                
                             />
                         </div>
 
