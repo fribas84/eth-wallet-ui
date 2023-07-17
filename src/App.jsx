@@ -24,10 +24,6 @@ function App() {
   const [ethToWithdraw, setEthToWithdraw] = useState("0");
   const [addressToWithdraw,setAddressToWithdraw] = useState(address);
 
-
-
-
-
   //read Balances
   const { data: scBalance } = useBalance({
     address: CONTRACT_ADDRESS,
@@ -39,7 +35,6 @@ function App() {
     watch: true
   })
   
-
   //DEPOSIT
   const { config: configDeposit } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
