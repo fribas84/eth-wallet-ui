@@ -21,7 +21,7 @@ function App() {
   const { data: walletClient } = useWalletClient({});
   const { address } = useAccount();
   const [ethToDeposit, setEthToDeposit] = useState("0");
-  const [ethToWithdraw, setEthToWithdraw] = useState("0");
+  const [ethToWithdraw, setEthToWithdraw] = useState(0);
   const [addressToWithdraw,setAddressToWithdraw] = useState(address);
 
   //read Balances
@@ -56,7 +56,7 @@ function App() {
     address: CONTRACT_ADDRESS,
     abi: ABI.abi,
     functionName: 'withdraw',
-    value: parseEther(ethToWithdraw),
+    args: [addressToWithdraw,parseEther(ethToWithdraw.toString())],
     onSuccess(data) {
       console.log('Success', data)
     }
@@ -88,7 +88,8 @@ function App() {
               setAddressToWithdraw = {setAddressToWithdraw}
               ethToWithdraw = {ethToWithdraw}
               handleWithdraw = {handleWithdraw}
-          
+              setEthToWithdraw = {setEthToWithdraw}
+              scBalance = {scBalance.formatted}
 
             />
           </div>
