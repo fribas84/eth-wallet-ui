@@ -14,10 +14,13 @@ const Form = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setEthToDeposit(transferAmount.toString());
+        // console.log(ethToDeposit);
+        // console.log(transferAmount);
+        // setEthToDeposit(transferAmount);
+        // console.log(ethToDeposit);
+        // console.log(transferAmount);
         if (balance >= ethToDeposit) {
             handleDeposit();
-            setTransferAmount(0);
         }
         else {
             console.log("error");
@@ -52,8 +55,8 @@ const Form = ({
                                 className="border-2 p-2  placeholder-gray-400 rounded-md w-3/4"
                                 type="number"
                                 placeholder="amount to deposit"
-                                onChange={(e) => setTransferAmount((e.target.value))}
-                                value={transferAmount}
+                                onChange={(e) => setEthToDeposit((e.target.value))}
+                                value={ethToDeposit}
                                 max={balance}
                                 min="0"
                                 step="any"
@@ -63,7 +66,7 @@ const Form = ({
                                 className="bg-teal-500 w-1/4  text-white  font-bold hover:bg-teal-700 cursor-pointer rounded-md ml-2"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    setTransferAmount(balance * 0.99999999);
+                                    setEthToDeposit(balance * 0.9999999);
                                 }}
                             >Max
                             </button>

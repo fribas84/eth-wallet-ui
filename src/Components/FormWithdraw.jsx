@@ -18,8 +18,12 @@ const FormWithdraw = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-
+        console.log(withdrawValue);
+        console.log(ethToWithdraw);
+        setEthToWithdraw(withdrawValue);
+        
+        handleWithdraw();
+        setWithdrawValue(0);
     }
     console.log("scBalance: ", scBalance)
     console.log("withdrawValue: ", withdrawValue)
@@ -61,7 +65,9 @@ const FormWithdraw = ({
                             />
                             <button
                                 className="bg-teal-500 w-1/4  text-white  font-bold hover:bg-teal-700 cursor-pointer rounded-md ml-2"
-                                onClick={() => setWithdrawValue(scBalance.toString())}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setWithdrawValue(scBalance.toString())}}
                             >Max
                             </button>
                         </div>
@@ -80,7 +86,7 @@ const FormWithdraw = ({
                             placeholder="address destination"
                             defaultValue={addressToWithdraw}
                             
-                            onChange={(e) => { parseFloat(setAddressToWithdraw(e.target.value)) }}
+                            onChange={(e) => setAddressToWithdraw(e.target.value)}
 
                         />
                     </div>
@@ -93,7 +99,9 @@ const FormWithdraw = ({
                     />
                     <button
                         className="bg-red-500 w-full p-3 text-white  font-bold hover:bg-red-700 cursor-pointer transition-all rounded-md mt-3"
-                        onClick={() => setWithdrawValue(0)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setWithdrawValue(0)}}
                     >Cancel
                     </button>
                 </form>

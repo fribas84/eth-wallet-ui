@@ -22,7 +22,7 @@ function App() {
   const { address } = useAccount();
   const [ethToDeposit, setEthToDeposit] = useState("0");
   const [ethToWithdraw, setEthToWithdraw] = useState(0);
-  const [addressToWithdraw,setAddressToWithdraw] = useState(address);
+  const [addressToWithdraw, setAddressToWithdraw] = useState(address);
 
   //read Balances
   const { data: scBalance } = useBalance({
@@ -34,29 +34,30 @@ function App() {
     address: address,
     watch: true
   })
-  
+
   //DEPOSIT
   const { config: configDeposit } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
     abi: ABI.abi,
     functionName: 'deposit',
-    value: parseEther(ethToDeposit),
+    value: parseEther(ethToDeposit.toString()),
     onSuccess(data) {
       console.log('Success', data)
     }
   })
   const { write: deposit } = useContractWrite(configDeposit);
 
-  const handleDeposit = async () => {
+  const handleDeposit = async (amount) => {
     deposit?.();
+    setEthToDeposit(0);
   }
 
-   //withdraw
-   const { config: configWithdraw} = usePrepareContractWrite({
+  //withdraw
+  const { config: configWithdraw } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
     abi: ABI.abi,
     functionName: 'withdraw',
-    args: [addressToWithdraw,parseEther(ethToWithdraw.toString())],
+    args: [addressToWithdraw, parseEther(ethToWithdraw.toString())],
     onSuccess(data) {
       console.log('Success', data)
     }
@@ -64,6 +65,8 @@ function App() {
   const { write: withdraw } = useContractWrite(configWithdraw);
 
   const handleWithdraw = async () => {
+
+    console.log(ethToWithdraw);
     withdraw?.();
   }
 
@@ -81,15 +84,15 @@ function App() {
               ethToDeposit={ethToDeposit}
               handleDeposit={handleDeposit}
               balance={balance.formatted}
-              
+
             />
             <FormWithdraw
-              addressToWithdraw = {addressToWithdraw}
-              setAddressToWithdraw = {setAddressToWithdraw}
-              ethToWithdraw = {ethToWithdraw}
-              handleWithdraw = {handleWithdraw}
-              setEthToWithdraw = {setEthToWithdraw}
-              scBalance = {scBalance.formatted}
+              addressToWithdraw={addressToWithdraw}
+              setAddressToWithdraw={setAddressToWithdraw}
+              ethToWithdraw={ethToWithdraw}
+              handleWithdraw={handleWithdraw}
+              setEthToWithdraw={setEthToWithdraw}
+              scBalance={scBalance.formatted}
 
             />
           </div>
