@@ -56,7 +56,7 @@ const Form = ({
                                 value={transferAmount}
                                 max={balance}
                                 min="0"
-                                step="0.000000001"
+                                step="any"
 
                             />
                             <button

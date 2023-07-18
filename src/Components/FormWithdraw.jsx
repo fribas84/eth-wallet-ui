@@ -55,7 +55,7 @@ const FormWithdraw = ({
                                 value={withdrawValue}
                                 max={scBalance}
                                 min="0"
-                                step="0.000000001"
+                                step="any"
 
 
                             />
@@ -79,7 +79,8 @@ const FormWithdraw = ({
                             type="text"
                             placeholder="address destination"
                             defaultValue={addressToWithdraw}
-                            onChange={(e) => { setAddressToWithdraw(e.target.value) }}
+                            
+                            onChange={(e) => { parseFloat(setAddressToWithdraw(e.target.value)) }}
 
                         />
                     </div>
