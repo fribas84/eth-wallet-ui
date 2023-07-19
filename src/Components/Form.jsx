@@ -12,6 +12,15 @@ const Form = ({
 
     const [transferAmount, setTransferAmount] = useState(0)
 
+    const handleDepositValueChange = (e) =>{
+        const newValue = e.target.value;
+        console.log("newValue: ", newValue);
+        if(newValue){
+            setEthToDeposit(newValue);
+        }else{
+            setEthToDeposit(0);
+        }
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(ethToDeposit);
@@ -55,7 +64,7 @@ const Form = ({
                                 className="border-2 p-2  placeholder-gray-400 rounded-md w-3/4"
                                 type="number"
                                 placeholder="amount to deposit"
-                                onChange={(e) => setEthToDeposit((e.target.value))}
+                                onChange={handleDepositValueChange}
                                 value={ethToDeposit}
                                 max={balance}
                                 min="0"
