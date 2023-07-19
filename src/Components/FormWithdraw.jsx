@@ -13,20 +13,24 @@ const FormWithdraw = ({
     scBalance }) => {
 
 
-    const [withdrawValue, setWithdrawValue] = useState(0);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(withdrawValue);
-        console.log(ethToWithdraw);
-        setEthToWithdraw(withdrawValue);
-        
         handleWithdraw();
-        setWithdrawValue(0);
+        setEthToWithdraw(0);
     }
-    console.log("scBalance: ", scBalance)
-    console.log("withdrawValue: ", withdrawValue)
+
+    const handleValueChange = (e) => {
+        const value = e.target.value;
+        console.log("value", value);
+        if (value) {
+            setEthToWithdraw(value)
+        } else {
+            setEthToWithdraw(0);
+        }
+    }
+
 
 
     return (
@@ -55,8 +59,8 @@ const FormWithdraw = ({
                                 className="border-2 p-2  placeholder-gray-400 rounded-md w-3/4"
                                 type="number"
                                 placeholder="amount to withdraw"
-                                onChange={e => setWithdrawValue(e.target.value)}
-                                value={withdrawValue}
+                                onChange={handleValueChange}
+                                value={ethToWithdraw}
                                 max={scBalance}
                                 min="0"
                                 step="any"
@@ -67,7 +71,8 @@ const FormWithdraw = ({
                                 className="bg-teal-500 w-1/4  text-white  font-bold hover:bg-teal-700 cursor-pointer rounded-md ml-2"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    setWithdrawValue(scBalance.toString())}}
+                                    setEthToWithdraw(scBalance.toString())
+                                }}
                             >Max
                             </button>
                         </div>
@@ -85,7 +90,7 @@ const FormWithdraw = ({
                             type="text"
                             placeholder="address destination"
                             defaultValue={addressToWithdraw}
-                            
+
                             onChange={(e) => setAddressToWithdraw(e.target.value)}
 
                         />
@@ -101,7 +106,8 @@ const FormWithdraw = ({
                         className="bg-red-500 w-full p-3 text-white  font-bold hover:bg-red-700 cursor-pointer transition-all rounded-md mt-3"
                         onClick={(e) => {
                             e.preventDefault();
-                            setWithdrawValue(0)}}
+                            setEthToWithdraw(0)
+                        }}
                     >Cancel
                     </button>
                 </form>

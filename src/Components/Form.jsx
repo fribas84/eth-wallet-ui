@@ -12,29 +12,24 @@ const Form = ({
 
     const [transferAmount, setTransferAmount] = useState(0)
 
-    const handleDepositValueChange = (e) =>{
+    const handleDepositValueChange = (e) => {
         const newValue = e.target.value;
         console.log("newValue: ", newValue);
-        if(newValue){
+        if (newValue) {
             setEthToDeposit(newValue);
-        }else{
+        } else {
             setEthToDeposit(0);
         }
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(ethToDeposit);
-        // console.log(transferAmount);
-        // setEthToDeposit(transferAmount);
-        // console.log(ethToDeposit);
-        // console.log(transferAmount);
+
         if (balance >= ethToDeposit) {
             handleDeposit();
         }
         else {
             console.log("error");
-            console.log(balance);
-            console.log(ethToDeposit);
+  
         }
 
     }
@@ -91,7 +86,7 @@ const Form = ({
                         className="bg-red-500 w-full p-3 text-white  font-bold hover:bg-red-700 cursor-pointer transition-all rounded-md mt-3"
                         onClick={(e) => {
                             e.preventDefault();
-                            setTransferAmount(0)
+                            setEthToDeposit(0)
                         }}
                     >Cancel
                     </button>
