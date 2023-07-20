@@ -14,7 +14,6 @@ const Form = ({
 
     const handleDepositValueChange = (e) => {
         const newValue = e.target.value;
-        console.log("newValue: ", newValue);
         if (newValue) {
             setEthToDeposit(newValue);
         } else {
@@ -70,7 +69,7 @@ const Form = ({
                                 className="bg-teal-500 w-1/4  text-white  font-bold hover:bg-teal-700 cursor-pointer rounded-md ml-2"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    setEthToDeposit(balance * 0.9999999);
+                                    setEthToDeposit(balance * 0.9999);
                                 }}
                             >Max
                             </button>
@@ -90,7 +89,7 @@ const Form = ({
                         }}
                     >Cancel
                     </button>
-                    <p className="font-bold mt-1 text-center"> Max button will leave some GWEI for gas.</p>
+                    <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
                 </form>
 
             </div>

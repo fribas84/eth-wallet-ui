@@ -37,7 +37,7 @@ function App() {
 
   //DEPOSIT
   const { config: configDeposit } = usePrepareContractWrite({
-    address: CONTRACT_ADDRESS,
+    address: CONTRACT_ADDRESS,  
     abi: ABI.abi,
     functionName: 'deposit',
     value: parseEther(ethToDeposit.toString()),
@@ -65,8 +65,6 @@ function App() {
   const { write: withdraw } = useContractWrite(configWithdraw);
 
   const handleWithdraw = async () => {
-
-    console.log(ethToWithdraw);
     withdraw?.();
   }
 
@@ -76,7 +74,7 @@ function App() {
         walletClient={walletClient}
 
       />
-      {walletClient &&
+      {address &&
         <div className='mt-12 flex'>
           <div className='md:w-1/2 lg:w-2/5'>
             <Form
@@ -102,7 +100,7 @@ function App() {
             scBalance={scBalance.formatted}
           />
         </div>}
-      {!walletClient &&
+      {!address &&
         <h1>Please connect with MetaMask</h1>
 
       }

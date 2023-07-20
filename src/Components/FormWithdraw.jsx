@@ -23,7 +23,6 @@ const FormWithdraw = ({
 
     const handleValueChange = (e) => {
         const value = e.target.value;
-        console.log("value", value);
         if (value) {
             setEthToWithdraw(value)
         } else {
