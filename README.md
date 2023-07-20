@@ -13,10 +13,11 @@ Test project to validate couple of web3 concepts and is a PoC, not for productio
 - [x] use wagmi to interact with contract
 - [x] clarify app.jsx
 - [ ] Add a loader for longer transactions 
+- [ ] Add error handling 
 
 ## Basics to do
-- [ ] widthdraw
-- [ ] Automatic refresh
+- [x] widthdraw
+- [x] Automatic refresh
 - [ ] Error Handling
 ## To run
 Currently is using a HardHat deployed contract
