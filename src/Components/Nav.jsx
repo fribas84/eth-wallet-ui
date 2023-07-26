@@ -13,7 +13,7 @@ const Nav = ({walletClient}) => {
 
                     <ConnectButton
                         label="Connect your wallet"
-                        accounStatus={{
+                        accountStatus={{
                             smallScreen: 'avatar',
                             largeScreen: 'full',
                         }}
